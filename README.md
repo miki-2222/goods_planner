@@ -97,3 +97,6 @@ SNSでの宣伝、Mattermostでの宣伝
   - Render
 - コンテナ
   - docker
+
+### 画面遷移図
+Figma：https://www.figma.com/design/JJKq8gY7FbCYzd3OblQLkt/%E7%84%A1%E9%A1%8C?node-id=0-1&t=7EYWtVuh13HBwJtO-1
