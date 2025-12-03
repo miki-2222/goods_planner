@@ -100,3 +100,6 @@ SNSでの宣伝、Mattermostでの宣伝
 
 ### 画面遷移図
 Figma：https://www.figma.com/design/JJKq8gY7FbCYzd3OblQLkt/%E7%84%A1%E9%A1%8C?node-id=0-1&t=7EYWtVuh13HBwJtO-1
+
+### ER図
+[![Image from Gyazo](https://i.gyazo.com/9757c16274d322c4f989831db22f1ee9.png)](https://gyazo.com/9757c16274d322c4f989831db22f1ee9)
