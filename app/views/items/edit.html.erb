@@ -90,14 +90,13 @@
       <div class="mt-8 flex justify-between items-center">
         <%= f.submit "更新する",class: "px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition cursor-pointer" %>
       </div>
-
-      <div class="mt-4">
-        <%= button_to "このアイテムを削除",
-                      item_path(@item),
-                      method: :delete,
-                      data: { turbo_confirm: "本当に削除しますか?" },
-                      class: "px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" %>
-      </div>
     </div>
   <% end %>
+  <div class="mt-4 bg-white shadow-md rounded-lg p-6">
+    <%= button_to "このアイテムを削除",
+                  item_path(@item),
+                  method: :delete,
+                  data: { turbo_confirm: "本当に削除しますか?" },
+                  class: "px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" %>
+  </div>
 </div>
