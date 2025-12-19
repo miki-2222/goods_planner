@@ -1,11 +1,11 @@
 <div class="container mx-auto px-4 py-8 max-w-2xl">
   <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold text-gray-800">アイテム編集</h1>
+    <h1 class="text-2xl font-bold mb-6">アイテム編集</h1>
     <%= link_to "← 一覧に戻る", items_path, class: "text-indigo-600 hover:text-indigo-800" %>
   </div>
 
   <!-- 編集フォーム -->
-  <%= form_with model: @item, local: true, class: "bg-white shadow-md rounded-lg p-6" do |f| %>
+  <%= form_with model: @item, local: true, id: "edit-item-form", class: "bg-white shadow-md rounded-lg p-6" do |f| %>
     <div class="space-y-6">
       <!-- アイテム名 -->
       <div>
@@ -86,17 +86,23 @@
                         placeholder: 'このアイテムについてのメモを記入できます',
                         rows: 4 %>
       </div>
-
-      <div class="mt-8 flex justify-between items-center">
-        <%= f.submit "更新する",class: "px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition cursor-pointer" %>
-      </div>
     </div>
   <% end %>
+
+  <!-- ボタンエリア -->
   <div class="mt-4 bg-white shadow-md rounded-lg p-6">
-    <%= button_to "このアイテムを削除",
-                  item_path(@item),
-                  method: :delete,
-                  data: { turbo_confirm: "本当に削除しますか?" },
-                  class: "px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" %>
+    <div class="flex gap-4">
+      <%= button_tag '更新',
+                    type: 'submit',
+                    form: 'edit-item-form',
+                    class: 'btn-primary flex-1' %>
+
+      <%= button_to "削除",
+                    item_path(@item),
+                    method: :delete,
+                    data: { turbo_confirm: "本当に削除しますか?" },
+                    form_class: "flex-1",
+                    class: "w-full px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" %>
+    </div>
   </div>
 </div>

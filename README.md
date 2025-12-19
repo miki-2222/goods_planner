@@ -99,8 +99,7 @@ SNSでの宣伝、Mattermostでの宣伝
   - docker
 
 ### 画面遷移図
-Figma：https://www.figma.com/design/JJKq8gY7FbCYzd3OblQLkt/%E7%84%A1%E9%A1%8C?node-id=0-1&t=7EYWtVuh13HBwJtO-1
-Figma：https://www.figma.com/design/JJKq8gY7FbCYzd3OblQLkt/%E7%84%A1%E9%A1%8C?node-id=0-1&t=7EYWtVuh13HBwJtO-1
+Figma：https://www.figma.com/design/KmynmTVG2F7dQI1J1HlxFj/Relim?node-id=0-1&t=neL6tbx67R6ZtewG-1
 
 ### ER図
 [![Image from Gyazo](https://i.gyazo.com/c53aa9f36e8ca60098ad6013ad5b7490.png)](https://gyazo.com/c53aa9f36e8ca60098ad6013ad5b7490)

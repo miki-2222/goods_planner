@@ -2,6 +2,6 @@ ja:
   enums:
     item:
       status:
-        planned: 予約、購入前
+        planned: 未予約・未購入
         reserved: 予約中
         purchased: 購入済み
