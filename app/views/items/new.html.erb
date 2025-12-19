@@ -1,0 +1,126 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-2xl mx-auto px-4">
+    <!-- ヘッダー -->
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold mb-6">アイテム登録</h1>
+      <p class="mt-2 text-sm text-gray-600">欲しいアイテムの情報を入力してください</p>
+    </div>
+
+    <!-- エラーメッセージ -->
+    <% if @item.errors.any? %>
+      <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-red-800">
+              <%= pluralize(@item.errors.count, "件のエラー") %>がありました
+            </h3>
+            <div class="mt-2 text-sm text-red-700">
+              <ul class="list-disc list-inside space-y-1">
+                <% @item.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- フォーム -->
+    <%= form_with model: @item, local: true, class: "space-y-6" do |f| %>
+      <div class="bg-white shadow rounded-lg p-6 space-y-6">
+
+        <!-- アイテム名 -->
+        <div>
+          <%= f.label :name, 'アイテム名', class: 'block text-sm font-medium text-gray-700 mb-2' %>
+          <%= f.text_field :name, 
+                           class: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition',
+                           placeholder: '未定' %>
+          <p class="mt-1 text-xs text-gray-500">*必須項目</p>
+          <% if @item.errors[:name].any? %>
+            <p class="mt-1 text-sm text-red-600"><%= @item.errors[:name].first %></p>
+          <% end %>
+        </div>
+
+        <!-- 価格 -->
+        <div>
+          <%= f.label :price, '価格', class: 'block text-sm font-medium text-gray-700 mb-2' %>
+          <div class="relative">
+            <%= f.text_field :price, 
+                             class: 'w-full pl-4 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition',
+                             placeholder: '未定',
+                             pattern: '[0-9]*',
+                             inputmode: 'numeric' %>
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <span class="text-gray-500 text-sm font-medium"></span>
+            </div>
+          </div>
+          <p class="mt-1 text-xs text-gray-500">半角数字で入力してください</p>
+          <% if @item.errors[:price].any? %>
+            <p class="mt-1 text-sm text-red-600"><%= @item.errors[:price].first %></p>
+          <% end %>
+        </div>
+
+        <!-- メモ -->
+        <div>
+          <%= f.label :memo, 'メモ', class: 'block text-sm font-medium text-gray-700 mb-2' %>
+          <%= f.text_area :memo, 
+                          class: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition',
+                          placeholder: 'このアイテムについてのメモを記入できます',
+                          rows: 4 %>
+        </div>
+
+        <!-- 購入状況 -->
+        <div>
+          <%= f.label :status, '購入状況', class: 'block text-sm font-medium text-gray-700 mb-2' %>
+          <%= f.select :status, 
+                       Item.statuses.keys.map { |k| [I18n.t("enums.item.status.#{k}"), k] },
+                       {},
+                       class: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition' %>
+          <% if @item.errors[:status].any? %>
+            <p class="mt-1 text-sm text-red-600"><%= @item.errors[:status].first %></p>
+          <% end %>
+        </div>
+
+        <!-- 発売日 -->
+        <div>
+          <%= f.label :release_date, '発売日', class: 'block text-sm font-medium text-gray-700 mb-2' %>
+          <%= f.date_field :release_date, 
+                           class: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition' %>
+        </div>
+
+        <!-- 予約開始日 -->
+        <div>
+          <%= f.label :reservation_start_date, '予約開始日', class: 'block text-sm font-medium text-gray-700 mb-2' %>
+          <%= f.date_field :reservation_start_date, 
+                           class: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition' %>
+        </div>
+
+         <!-- 予約終了日 -->
+        <div>
+          <%= f.label :reservation_end_date, '予約終了日', class: 'block text-sm font-medium text-gray-700 mb-2' %>
+          <%= f.date_field :reservation_end_date, 
+                           class: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition' %>
+        </div>
+
+        <!-- 購入日 -->
+        <div>
+          <%= f.label :purchased_at, '購入日', class: 'block text-sm font-medium text-gray-700 mb-2' %>
+          <%= f.date_field :purchased_at, 
+                           class: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition' %>
+        </div>
+      </div>
+
+      <!-- ボタンエリア -->
+      <div class="flex gap-4">
+        <%= f.submit '登録する', class: 'btn-primary flex-1' %>
+        <%= link_to 'キャンセル', items_path, class: 'flex-1 text-center px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition' %>
+      </div>
+    <% end %>
+  </div>
+</div>

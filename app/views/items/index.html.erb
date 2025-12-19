@@ -1,13 +1,91 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-  <div class="bg-white rounded-lg shadow-2xl p-8 max-w-md">
-    <h1 class="text-4xl font-bold text-gray-800 mb-4">
-      Tailwind CSS Test
-    </h1>
-    <p class="text-gray-600 mb-6">
-      このテキストにTailwindのスタイルが適用されていれば成功です!✨
-    </p>
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300">
-      クリック!
-    </button>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-6">アイテム一覧</h1>
+  
+  <!-- ナビゲーション -->
+  <div class="mb-6 border-b border-gray-200">
+    <nav class="flex space-x-8">
+      <%= link_to "すべて", items_path, 
+          class: "pb-3 px-1 border-b-2 font-medium text-sm #{@filter.nil? ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" %>
+      
+      <%= link_to "未予約・未購入", items_path(filter: 'planned'), 
+          class: "pb-3 px-1 border-b-2 font-medium text-sm #{@filter == 'planned' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" %>
+
+      <%= link_to "予約中", items_path(filter: 'reserved'), 
+          class: "pb-3 px-1 border-b-2 font-medium text-sm #{@filter == 'reserved' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" %>
+
+      <%= link_to "購入済み", items_path(filter: 'purchased'), 
+          class: "pb-3 px-1 border-b-2 font-medium text-sm #{@filter == 'purchased' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}" %>
+    </nav>
   </div>
+
+  <!-- アイテム一覧 -->
+  <% if @items.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <% @items.each do |item| %>
+      <%= link_to edit_item_path(item), class: "block" do %>
+        <div class="bg-white rounded-lg shadow p-4">
+          <h3 class="text-xl font-bold mb-2"><%= item.name %></h3>
+
+            <!-- ステータス表示 -->
+            <p class="text-sm">
+              <% if item.planned? %>
+                <span class="inline-block px-2 py-1 rounded bg-yellow-100 text-yellow-800">
+                  予約、購入前
+                </span>
+              <% elsif item.reserved? %>
+                <span class="inline-block px-2 py-1 rounded bg-blue-100 text-blue-800">
+                  予約中
+                </span>
+              <% elsif item.purchased? %>
+                <span class="inline-block px-2 py-1 rounded bg-green-100 text-green-800">
+                  購入済み
+                </span>
+              <% end %>
+            </p>
+          <div class="space-y-2">
+            <% if item.purchased? && item.price.present? %>
+              <p class="text-sm text-gray-500">
+                価格: <%= number_to_currency(item.price, unit: "円", precision: 0) %>
+              </p>
+            <% end %>
+
+            <!-- 予約期間表示(ステータスに関係なく、日付があれば表示) -->
+            <% if item.reservation_start_date.present? || item.reservation_end_date.present? %>
+              <p class="text-sm text-blue-600">
+                予約: <%= item.reservation_start_date&.strftime('%Y/%m/%d') || '未定' %> 
+                〜 <%= item.reservation_end_date&.strftime('%Y/%m/%d') || '未定' %>
+              </p>
+            <% end %>
+
+            <!-- 発売日表示(発売日が存在する場合のみ) -->
+            <% if item.release_date.present? %>
+              <p class="text-sm text-gray-500">
+                発売日: <%= item.release_date.strftime('%Y/%m/%d') %>
+              </p>
+            <% end %>
+
+            <!-- 購入日表示(購入済みの場合のみ) -->
+            <% if item.purchased? %>
+              <p class="text-sm text-gray-500">
+                購入日: <%= item.created_at.strftime('%Y/%m/%d') %>
+              </p>
+            <% end %>
+
+            <!-- メモ表示(購入済みでメモがある場合のみ) -->
+            <% if item.memo.present? %>
+              <p class="text-sm text-gray-500">
+                メモ: <%= item.memo %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    </div>
+  <% else %>
+    <div class="bg-gray-100 rounded-lg p-8 text-center">
+      <p class="text-gray-600 mb-4">表示するアイテムはありません</p>
+      <%= link_to "アイテムを登録する", new_item_path , class: "text-blue-500 hover:text-blue-700 font-bold" %>
+    </div>
+  <% end %>
 </div>

@@ -1,7 +1,7 @@
 <header class="bg-gray-800 text-white p-4">
   <div class="container mx-auto flex justify-between items-center">
     <h1 class="text-2xl font-bold">
-      <%= link_to "YourApp", root_path, class: "hover:text-gray-300" %>
+      <%= link_to "GoodsPlanner", root_path, class: "hover:text-gray-300" %>
     </h1>
 
     <nav>
@@ -9,7 +9,8 @@
         <!-- ログイン中の表示 -->
         <div class="flex items-center gap-4">
           <span>ようこそ、<%= current_user.name %>さん</span>
-          <%= link_to "購入予定一覧", items_path, class: "hover:text-gray-300" %>
+          <%= link_to "アイテム登録", new_item_path, class: "hover:text-gray-300" %>
+          <%= link_to "アイテム一覧", items_path, class: "hover:text-gray-300" %>
           <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "hover:text-gray-300" %>
         </div>
       <% else %>

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   root "items#index"
 
   # アイテムのCRUD操作
-  resources :items
+  resources :items do
+    resources :items
+  end
 
   # ヘルスチェック用
   get "up" => "rails/health#show", as: :rails_health_check
